@@ -15,6 +15,7 @@
 		<jdk.version>1.8</jdk.version>
 		<junit.version>4.12</junit.version>
 		<commons-lang.version>3.6</commons-lang.version>
+		<commons-io.version>2.6</commons-io.version>
 	</properties>
 
 	<dependencies>
@@ -30,6 +31,13 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>${commons-lang.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -43,6 +51,43 @@
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<!-- 配置打包插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.5.5</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>org.javaee.hash.HashConflictTester</mainClass>
+						</manifest>
+					</archive>
+					<!-- 打包测试文件需要在这里描述 -->
+					<descriptor>src/main/resources/assembly.xml</descriptor>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<!-- 配置支持mvn package来打包，无需通过mvn package来打包，无需assembly:single -->
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- 执行mvn exec:java，运行mainClass -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>org.javaee.hash.HashConflictTester</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -68,19 +68,4 @@ public class Time33Utils {
 		return hash;
 	}
 	
-	public static void main(String[] args) {
-		String[] array = {"qiuzhanjia", "中华人民共和国", "qiuzhanjia中华人民共和国"};
-		for (String value : array) {
-			System.out.print(time33V1(value));
-			System.out.print(" ");
-			System.out.print(time33V2(value));
-			System.out.print(" ");
-			System.out.print(time33V3(value));
-			
-			System.out.print(" ");
-			System.out.print(time31V1(value));
-			System.out.print(" ");
-			System.out.println(time31V2(value));
-		}
-	}
 }
