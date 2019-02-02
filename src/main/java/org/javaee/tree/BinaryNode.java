@@ -1,5 +1,12 @@
 package org.javaee.tree;
 
+/**
+ * 二叉链表节点
+ * 
+ * @author 二进制之路
+ *
+ * @param <T>
+ */
 public class BinaryNode<T> {
 
 	public T element;
