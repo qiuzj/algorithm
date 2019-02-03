@@ -4,6 +4,12 @@ import org.javaee.tree.BinaryNode;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 二叉树遍历
+ * 
+ * @author 二进制之路
+ *
+ */
 public class BinaryTreeTraversalTester {
 
 	private BinaryNode<String> root;

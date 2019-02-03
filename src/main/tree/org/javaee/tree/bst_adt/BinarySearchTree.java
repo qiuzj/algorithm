@@ -18,8 +18,11 @@ package org.javaee.tree.bst_adt;
 import org.javaee.common.UnderflowException;
 
 /**
+ * 二叉树查找树。基于递归进行查找、插入、删除，逻辑略显复杂。
+ * <p>
  * Implements an unbalanced binary search tree.
  * Note that all "matching" is based on the compareTo method.
+ * 
  * @author Mark Allen Weiss
  */
 public class BinarySearchTree<AnyType extends Comparable<? super AnyType>>
