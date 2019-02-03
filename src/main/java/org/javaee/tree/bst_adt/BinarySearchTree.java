@@ -112,24 +112,30 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>>
 
     /**
      * Internal method to insert into a subtree.
+     * <pre>
+     * 如果要插入的数据比节点的数据大，并且节点的右子树为空，就将新数据直接插到右子节点的位置；如果不为空，就再递归遍历右子树，查找插入位置。
+     * 同理，如果要插入的数据比节点数值小，并且节点的左子树为空，就将新数据插入到左子节点的位置；如果不为空，就再递归遍历左子树，查找插入位置。
+     * </pre>
+     * 
      * @param x the item to insert.
      * @param t the node that roots the subtree.
      * @return the new root of the subtree.
      */
     private BinaryNode<AnyType> insert( AnyType x, BinaryNode<AnyType> t )
     {
+    	// t为x要插入的子树，如果t为空，则说明这里就是要插入的位置，于是，构造一个值为x的叶子节点并返回。
         if( t == null )
             return new BinaryNode<>( x, null, null );
         
-        int compareResult = x.compareTo( t.element );
+        int compareResult = x.compareTo( t.element ); // 插入值x与当前节点t的值进行比较
             
-        if( compareResult < 0 )
-            t.left = insert( x, t.left );
-        else if( compareResult > 0 )
-            t.right = insert( x, t.right );
+        if( compareResult < 0 ) // 插入左子树
+            t.left = insert( x, t.left ); // 作用：t.left=t.left
+        else if( compareResult > 0 ) // 插入右子树
+            t.right = insert( x, t.right ); // 作用：t.right=t.right
         else
             ;  // Duplicate; do nothing
-        return t;
+        return t; // 每次操作的最后，都会返回自己
     }
 
     /**
