@@ -15,7 +15,7 @@ public class BinarySearch {
 		} else if (item < array[middleIndex]) {
 			return search(array, startIndex, middleIndex, item);
 		} else if (item > array[middleIndex]) {
-			return search(array, middleIndex + 1, endIndex, item);
+			return search(array, middleIndex + 1, endIndex, item); // 重点是要记得加1，如果直接用middleIndex，那后面的处理endIndex-startIndex=1的情况将会很复杂
 		}
 		return middleIndex;
 	}
