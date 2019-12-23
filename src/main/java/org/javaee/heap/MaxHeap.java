@@ -4,7 +4,7 @@ package org.javaee.heap;
  * 大顶堆
  *
  */
-public class MaxHeap extends AbstractHeap{
+public class MaxHeap extends AbstractHeap {
 
 	public MaxHeap(int capacity) {
 		super(capacity);

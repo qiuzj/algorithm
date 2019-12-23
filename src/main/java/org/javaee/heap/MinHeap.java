@@ -4,7 +4,7 @@ package org.javaee.heap;
  * 小顶堆
  *
  */
-public class MinHeap extends AbstractHeap{
+public class MinHeap extends AbstractHeap {
 
 	public MinHeap(int capacity) {
 		super(capacity);
