@@ -2,7 +2,9 @@ package org.javaee.heap;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +15,7 @@ import java.util.List;
 import org.junit.Test;
 
 /**
- * 合并有序小文件
+ * 实战1：合并有序小文件
  * 
  */
 public class MergeSortedFilesTest {
@@ -22,63 +24,106 @@ public class MergeSortedFilesTest {
 	public static final String SOURCE_FILENAME = "linux.words";
 
 	@Test
-	public void testMerge() throws IOException {
+	public void testMerge() {
 
-		//文件总数fileCount
+		// 文件总数fileCount
 		int fileCount = 10;
-			
-		// 创建fileCount相应数量的BufferedReader 
+		// 小文件输入流对象
 		List<BufferedReader> readerList = new ArrayList<>(fileCount);
-		for (int i = 0; i < fileCount; i++) {
-			FileInputStream fis = new FileInputStream(BASE_DIR + SOURCE_FILENAME + i);
-			InputStreamReader isr = new InputStreamReader(fis);
-			BufferedReader br = new BufferedReader(isr);
-			readerList.add(br);
-		}
+		// 大文件输出流对象
+		BufferedWriter bw = null;
 		
-		// 创建小顶堆，容量为fileCount
-		MinGenericHeap<Node> heap = new MinGenericHeap<Node>(fileCount);
-		
-		// 先从每个文件中取1个元素，放入堆中
-		String line = null;
-		for (int i = 0; i < fileCount; i++) {
-			if ((line = readerList.get(i).readLine()) != null) {
-				heap.insert(new Node(line.trim().toLowerCase(), i));
-			}
-		}
-		
-		// 创建大文件BufferedReader 
-		FileOutputStream fos = new FileOutputStream(BASE_DIR + SOURCE_FILENAME + "_big");
-		OutputStreamWriter osw = new OutputStreamWriter(fos);
-		BufferedWriter bw = new BufferedWriter(osw);
-		
-		// 然后进入循环处理
-		while (true) {
-			// 取出堆顶元素
-			Node minNode = heap.removeTop();
-			
-			// 为空则break结束处理
-			if (minNode == null) {
-				break;
+		try {
+			// 1.为每个小文件创建输入流量对象br，并通过索引号缓存起来
+			for (int i = 0; i < fileCount; i++) {
+				FileInputStream fis = new FileInputStream(BASE_DIR + SOURCE_FILENAME + i);
+				InputStreamReader isr = new InputStreamReader(fis);
+				BufferedReader br = new BufferedReader(isr);
+				readerList.add(br);
 			}
 			
-			// 放入大文件
-			bw.write(minNode.getValue());
-			bw.write('\n');
+			// 2.为大文件创建输出流对象bw
+			FileOutputStream fos = new FileOutputStream(BASE_DIR + SOURCE_FILENAME + "_big");
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+			bw = new BufferedWriter(osw);
 			
-			// 如果堆顶元素所在文件的下一个元素存在，则插入堆
-			int fileIndex = minNode.getFileIndex();
-			if ((line = readerList.get(fileIndex).readLine()) != null) {
-				heap.insert(new Node(line.trim(), fileIndex));
+			// 3.创建小顶堆heap. 容量为fileCount
+			MinGenericHeap<Node> heap = new MinGenericHeap<Node>(fileCount);
+			
+			// 4.依次从每个文件中各取1个元素v，创建节点T(v,i)，并插入堆中
+			String line = null;
+			for (int i = 0; i < fileCount; i++) {
+				if ((line = readerList.get(i).readLine()) != null) {
+					heap.insert(new Node(line.trim(), i));
+				}
+			}
+			
+			// 然后进入循环处理
+			while (true) {
+				// 1.取出堆顶T（堆中的最小值）
+				Node minNode = heap.removeTop();
+				
+				// 为空则break结束处理
+				if (minNode == null) {
+					break;
+				}
+				
+				// 2.将堆顶元素值写入大文件
+				bw.write(minNode.getValue());
+				bw.write('\n');
+				
+				// 3.如果堆顶元素所在文件的下一个元素存在，则插入堆
+				int fileIndex = minNode.getFileIndex();
+				if ((line = readerList.get(fileIndex).readLine()) != null) {
+					heap.insert(new Node(line.trim(), fileIndex));
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭文件流
+			close(bw);
+			for (BufferedReader br : readerList) {
+				close(br);
 			}
 		}
-		 
-		//关闭大文件BufferedReader 
-		bw.close();
-		
-		// 关闭所有BufferedReader 
-		for (BufferedReader br : readerList) {
-			br.close();
+	}
+	
+	@Test
+	public void testCompare() {
+		try (FileInputStream fis1 = new FileInputStream(BASE_DIR + SOURCE_FILENAME);
+			InputStreamReader isr1 = new InputStreamReader(fis1);
+			BufferedReader br1 = new BufferedReader(isr1);
+			FileInputStream fis2 = new FileInputStream(BASE_DIR + SOURCE_FILENAME + "_big");
+			InputStreamReader isr2 = new InputStreamReader(fis2);
+			BufferedReader br2 = new BufferedReader(isr2);) {
+			String line1 = null;
+			String line2 = null;
+			while ((line1 = br1.readLine()) != null && (line2 = br2.readLine()) != null) {
+				if (!line1.equals(line2)) {
+					throw new IllegalArgumentException(String.format("%s is not equals to %s", line1, line2));
+				}
+			}
+			if (br1.readLine() != null || br2.readLine() != null) {
+				throw new IllegalArgumentException("line1 is not equals to line2");
+			}
+			System.out.println("Well done!");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void close(Closeable c) {
+		if (c != null) {
+			try {
+				c.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
