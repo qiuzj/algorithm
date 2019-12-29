@@ -44,6 +44,13 @@ public abstract class AbstractGenericHeap<E> {
 		
 		return result;
 	}
+	
+	/**
+	 * 获得堆顶节点，但不删除节点
+	 * 
+	 * @return
+	 */
+	public abstract E peek();
 
 	/**
 	 * 建堆.（实际处理时，下标从0开始）

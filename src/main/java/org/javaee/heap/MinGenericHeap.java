@@ -6,6 +6,10 @@ package org.javaee.heap;
  */
 public class MinGenericHeap<E> extends AbstractGenericHeap<E> {
 
+	public MinGenericHeap() {
+		super(16);
+	}
+	
 	public MinGenericHeap(int capacity) {
 		super(capacity);
 	}
@@ -32,6 +36,14 @@ public class MinGenericHeap<E> extends AbstractGenericHeap<E> {
 			// 下一个待堆化的节点
 			heapifyIndex = parent;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public E peek() {
+		if (size == 0)
+			return null;
+		return (E) data[0];
 	}
 
 	/**
