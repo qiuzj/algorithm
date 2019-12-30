@@ -29,5 +29,22 @@ public class ArrayUtils {
 		}
 		System.out.println(sb.subSequence(0, sb.length() - 1));
 	}
+
+	/**
+	 * 打印数组
+	 * 
+	 * @param array
+	 */
+	public static void println(int[] array, int startIndex) {
+		if (!debug) return;
+		if (array == null || array.length <= 0) {
+			return;
+		}
+		StringBuilder sb = new StringBuilder();
+		for (int i = startIndex; i < array.length; i++) {
+			sb.append(array[i]).append(",");
+		}
+		System.out.println(sb.subSequence(0, sb.length() - 1));
+	}
 	
 }
