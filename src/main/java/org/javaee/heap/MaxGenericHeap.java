@@ -4,13 +4,13 @@ package org.javaee.heap;
  * 小顶堆
  *
  */
-public class MinGenericHeap<E> extends AbstractGenericHeap<E> {
+public class MaxGenericHeap<E> extends AbstractGenericHeap<E> {
 
-	public MinGenericHeap() {
+	public MaxGenericHeap() {
 		super(16);
 	}
 	
-	public MinGenericHeap(int capacity) {
+	public MaxGenericHeap(int capacity) {
 		super(capacity);
 	}
 	
@@ -29,8 +29,8 @@ public class MinGenericHeap<E> extends AbstractGenericHeap<E> {
 		/* 2.自下往上堆化 */
 		int heapifyIndex = size++;
 		int parent = -1;
-		// 父节点必须存在，并且父节点比当前节点大
-		while ((parent = (heapifyIndex - 1) / 2) >= 0 && compare(data[heapifyIndex], data[parent]) < 0) {
+		// 父节点必须存在，并且父节点比当前节点小
+		while ((parent = (heapifyIndex - 1) / 2) >= 0 && compare(data[heapifyIndex], data[parent]) > 0) {
 			// 交换节点
 			swap(heapifyIndex, parent);
 			// 下一个待堆化的节点
@@ -61,11 +61,11 @@ public class MinGenericHeap<E> extends AbstractGenericHeap<E> {
 			int rightChildIndex = leftChildIndex + 1;
 			
 			/* 2.在当前待堆化的节点，及其左、右子节点中，找到最大的节点值的索引号 */
-			// 存在左节点，并且左节点比父节点小
-			if (leftChildIndex < heapifySize && compare(data[heapifyIndex], data[leftChildIndex]) > 0)
+			// 存在左节点，并且左节点比父节点大
+			if (leftChildIndex < heapifySize && compare(data[heapifyIndex], data[leftChildIndex]) < 0)
 				minIndex = leftChildIndex;
-			// 存在右节点，并且右节点更小
-			if (rightChildIndex < heapifySize && compare(data[minIndex], data[rightChildIndex]) > 0)
+			// 存在右节点，并且右节点更大
+			if (rightChildIndex < heapifySize && compare(data[minIndex], data[rightChildIndex]) < 0)
 				minIndex = rightChildIndex;
 			// 如果待堆化的节点，大于等于左、右子节点，则堆化完成
 			if (minIndex == heapifyIndex)

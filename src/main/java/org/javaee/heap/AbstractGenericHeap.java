@@ -1,7 +1,5 @@
 package org.javaee.heap;
 
-import java.util.Arrays;
-
 /**
  * 堆结构基类. 下标从1开始
  *
@@ -126,9 +124,13 @@ public abstract class AbstractGenericHeap<E> {
 		return ((Comparable<Object>) o1).compareTo((Comparable<Object>) o2);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public E[] getData(E[] a) {
-		return (E[]) Arrays.copyOf(data, size, a.getClass());
+//	@SuppressWarnings("unchecked")
+//	public E[] getData(E[] a) {
+//		return (E[]) Arrays.copyOf(data, size, a.getClass());
+//	}
+
+	public E[] getData() {
+		return (E[]) data;
 	}
 
 	public int getSize() {
