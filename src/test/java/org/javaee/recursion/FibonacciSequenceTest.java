@@ -11,13 +11,7 @@ import org.junit.Test;
  */
 public class FibonacciSequenceTest {
 	
-	private static Map<Long, Long> cacheMap;
-	
-	static {
-		cacheMap = new HashMap<>();
-		cacheMap.put(1L, 1L);
-		cacheMap.put(2L, 1L);
-	}
+	private static Map<Long, Long> cacheMap = new HashMap<>();
 	
 	@Test
 	public void testRecursiveFibonacci() {
@@ -45,31 +39,13 @@ public class FibonacciSequenceTest {
 		if (n <= 2) return 1;
 		
 		if (cacheMap.containsKey(n)) {
-			System.out.println("containsKey n");
 			return cacheMap.get(n);
 		}
 		
-		long c1 = n - 1;
-		long n1 = -1;
-		if (cacheMap.containsKey(c1)) {
-			System.out.println("containsKey n-1");
-			n1 = cacheMap.get(c1);
-		} else {
-			n1 = recursiveFibonacciWithCache(c1);
-			cacheMap.put(c1, n1);
-		}
-
-		long c2 = n - 2;
-		long n2 = -1;
-		if (cacheMap.containsKey(c2)) {
-			System.out.println("containsKey n-2");
-			n2 = cacheMap.get(c2);
-		} else {
-			n2 = recursiveFibonacciWithCache(c2);
-			cacheMap.put(c2, n2);
-		}
+		long ret = recursiveFibonacciWithCache(n - 1) + recursiveFibonacciWithCache(n - 2);
+		cacheMap.put(n, ret);
 		
-		return n1 + n2;
+		return ret;
 	}
 	
 	/**
