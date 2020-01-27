@@ -18,17 +18,36 @@ public class SinglyLinkedList {
 
         return p;
     }
+//    mine：
+//    Node p = head;
+//    while (p != null) {
+//      if (p.data == value) {
+//        return p;
+//      }
+//      p = p.next;
+//    }
+//    return null;
 
     public Node findByIndex(int index) {
         Node p = head;
-        int pos = 0;
+        int pos = 0; // 当前节点的索引号，head节点对应的索引号为0
         while (p != null && pos != index) {
             p = p.next;
-            ++pos;
+            ++pos; // 第二个节点head.next对应的索引号为1
         }
 
         return p;
     }
+//    mine：
+//    Node p = head;
+//    int i = 0;
+//    while (p != null) {
+//      if (++i == index) {
+//        return p;
+//      }
+//      p = p.next
+//    }
+//    return null;
 
     //无头结点
     //表头部插入
@@ -37,6 +56,9 @@ public class SinglyLinkedList {
         Node newNode = new Node(value, null);
         insertToHead(newNode);
     }
+//    mine：
+//    Node newNode = new Node(value, head);
+//    head = newNode;
 
     public void insertToHead(Node newNode) {
         if (head == null) {
@@ -61,14 +83,28 @@ public class SinglyLinkedList {
             while(q.next != null){
                 q = q.next;
             }
-            newNode.next = q.next;
+            newNode.next = q.next; // 此步可省略吧，因为q.next恒等于null
             q.next = newNode;
         }
     }
+//    mine：
+//    if (head == null) {
+//      head = new Node(value, null);
+//    } else {
+//      Node p = head;
+//      while (p.next != null) {
+//        p = p.next;
+//      }
+//      p.next = new Node(value, null);
+//    }
+    
     public void insertAfter(Node p, int value) {
         Node newNode = new Node(value, null);
         insertAfter(p, newNode);
     }
+//    mine：
+//    Node newNode = new Node(value, p.next);
+//    p.next = newNode;
 
     public void insertAfter(Node p, Node newNode) {
         if (p == null) return;
@@ -81,6 +117,25 @@ public class SinglyLinkedList {
         Node newNode = new Node(value, null);
         insertBefore(p, newNode);
     }
+//    mine：
+//    if (p == null) {
+//      throw new IllegalArgumentException("Node p cannot be null");
+//    }
+//
+//    Node newNode = new Node(value, p);
+//
+//    // p为第1个节点
+//    if (p == head) {
+//      head = newNode;
+//      return;
+//    }
+//
+//    // p为非第1个节点
+//    Node prevs = head;
+//    while (prevs.next != p) { // 假设p一定存在的场景
+//      prevs = prevs.next;
+//    }
+//    prevs.next = newNode;
 
     public void insertBefore(Node p, Node newNode) {
         if (p == null) return;
@@ -122,6 +177,34 @@ public class SinglyLinkedList {
 
         q.next = q.next.next;
     }
+//    空链表
+//    非空链表
+//
+//    在第一个
+//    在最后一个
+//    在中间
+//
+//    找不到
+//
+//    mine：
+//    // 空
+//    if (head == null || p == null) {
+//      return;
+//    }
+//    // 删除头节点
+//    if (head == p) {
+//      head = head.next;
+//    }
+//
+//    // 删除非头节点
+//    Node q = head;
+//    while (q.next != null && q.next != p) {
+//      q = q.next;
+//    }
+//    if (q.next == null) {
+//      return;
+//    }
+//    q.next = q.next.next;
 
     public void deleteByValue(int value) {
         if (head == null) return;
@@ -157,6 +240,46 @@ public class SinglyLinkedList {
            }
          */
     }
+//    空链表
+//    非空链表
+//
+//    在第一个
+//    在最后一个
+//    在中间
+//
+//    找不到
+//
+//    mine：
+//    // 空
+//    if (head == null) {
+//      return;
+//    }
+//    // 删除头节点
+//    if (head.data == value) {
+//      head = head.next;
+//    }
+//
+//    // 删除非头节点
+//    Node q = head;
+//    while (q.next != null && q.next.data != value) {
+//      q = q.next;
+//    }
+//    if (q.next == null) {
+//      return;
+//    }
+//    q.next = q.next.next;
+//    
+//    第二段重复删除：
+//    Node p = head;
+//    while (p != null) {
+//      // 如果下一节点为要删除的值，则忽略该节点
+//      if (p.next != null && p.next.data == value) {
+//        p.next = p.next.next;
+//        continue;
+//      }
+//      // 否则继续比较下一节点
+//      p = p.next;
+//    }
 
     public void printAll() {
         Node p = head;
