@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Created by SpecialYang in 2018/12/7 2:00 PM.
  *
- * 基于数组实现的LRU缓存
+ * 基于数组实现的LRU缓存. 新元素放索引为0的位置，旧数据（最长时间未被访问）放到索引号最大的地方
  * 1. 空间复杂度为O(n)
  * 2. 时间复杂度为O(n)
  * 3. 不支持null的缓存
@@ -13,13 +13,13 @@ import java.util.Map;
 public class LRUBasedArray<T> {
 
     private static final int DEFAULT_CAPACITY = (1 << 3);
-
+    // 容量
     private int capacity;
-
+    // 队列数量
     private int count;
-
+    // 存储缓存数据的数组
     private T[] value;
-
+    // 缓存数据索引的Map集合：<元素值, 数组索引>
     private Map<T, Integer> holder;
 
     public LRUBasedArray() {
@@ -35,19 +35,25 @@ public class LRUBasedArray<T> {
 
     /**
      * 模拟访问某个值
+     * 
      * @param object
      */
     public void offer(T object) {
         if (object == null) {
             throw new IllegalArgumentException("该缓存容器不支持null!");
         }
+        // 从holder中查询是否已缓存，比遍历数组更加高效
         Integer index = holder.get(object);
+        // 未缓存
         if (index == null) {
+        	// 已满
             if (isFull()) {
                 removeAndCache(object);
+            // 未满
             } else {
                 cache(object, count);
             }
+        // 已缓存
         } else {
             update(index);
         }
@@ -66,34 +72,39 @@ public class LRUBasedArray<T> {
 
     /**
      * 缓存数据到头部，但要先右移
+     * 
      * @param object
      * @param end 数组右移的边界
      */
     public void cache(T object, int end) {
-        rightShift(end);
-        value[0] = object;
-        holder.put(object, 0);
-        count++;
+        rightShift(end); // 原有数据右移一位
+        value[0] = object; // 新元素放到头部，相当于放到队列首部
+        holder.put(object, 0); // 缓存索引号
+        count++; // 缓存数量加1
     }
 
     /**
-     * 缓存满的情况，踢出后，再缓存到数组头部
+     * 缓存满的情况，踢出后，再缓存到数组头部.
+     * 记得要删除holder缓存
+     * 
      * @param object
      */
     public void removeAndCache(T object) {
-        T key = value[--count];
-        holder.remove(key);
+        T key = value[--count]; // 获取最后一个元素，数量减1
+        holder.remove(key); // 删除最后一个元素，淘汰队尾最长时间没有访问的元素
+        // 缓存新的元素
         cache(object, count);
     }
 
     /**
-     * end左边的数据统一右移一位
+     * end左边的数据（0~end-1）统一右移一位
+     * 
      * @param end
      */
     private void rightShift(int end) {
         for (int i = end - 1; i >= 0; i--) {
-            value[i + 1] = value[i];
-            holder.put(value[i], i + 1);
+            value[i + 1] = value[i]; // 右移一位
+            holder.put(value[i], i + 1); // 更新元素的缓存索引
         }
     }
 
