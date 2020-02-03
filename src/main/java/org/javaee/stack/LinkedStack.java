@@ -23,7 +23,6 @@ public class LinkedStack<E> {
 		size++;
 	}
 
-	@SuppressWarnings("unchecked")
 	public E pop() {
 		if (size == 0) {
 			return null;
