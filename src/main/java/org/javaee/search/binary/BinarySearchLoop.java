@@ -25,7 +25,7 @@ public class BinarySearchLoop {
 		int left = 0;
 		int right = nums.length - 1; // [重点]
 		while (left <= right) { // [重点]
-			int middle = left + (right - left) / 2;
+			int middle = left + (right - left) / 2; // 不要用left+right，防止整型值溢出
 			// 目标在middle的左方，因此减1
 			if (target < nums[middle]) {
 				right = middle - 1; // [重点]
