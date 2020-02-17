@@ -21,35 +21,51 @@ postOrder(r) = postOrder(r->left)->postOrder(r->right)->print r
 
  * </pre>
  * @author 二进制之路
+ * @param <T>
  *
  */
-public class BinaryTreeTraversal {
+public class BinaryTreeTraversal<T> {
 
-	public void preOrder(BinaryNode<?> node) {
+	/**
+	 * 前序遍历（递归模板）
+	 * 
+	 * @param node
+	 */
+	public void preOrder(BinaryNode<T> node) {
 		if (node == null) {
 			return;
 		}
-		System.out.print(node.element);
+		System.out.print(node.element); // 访问节点，主逻辑处理
 		preOrder(node.leftChild);
 		preOrder(node.rightChild);
 	}
-
-	public void inOrder(BinaryNode<?> node) {
+	
+	/**
+	 * 中序遍历（递归模板）
+	 * 
+	 * @param node
+	 */
+	public void inOrder(BinaryNode<T> node) {
 		if (node == null) {
 			return;
 		}
 		inOrder(node.leftChild);
-		System.out.print(node.element);
+		System.out.print(node.element); // 访问节点，主逻辑处理
 		inOrder(node.rightChild);
 	}
 	
-	public void postOrder(BinaryNode<?> node) {
+	/**
+	 * 后序遍历（递归模板）
+	 * 
+	 * @param node
+	 */
+	public void postOrder(BinaryNode<T> node) {
 		if (node == null) {
 			return;
 		}
 		postOrder(node.leftChild);
 		postOrder(node.rightChild);
-		System.out.print(node.element);
+		System.out.print(node.element); // 访问节点，主逻辑处理
 	}
 	
 }
