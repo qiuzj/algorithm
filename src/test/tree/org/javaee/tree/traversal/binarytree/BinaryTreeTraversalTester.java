@@ -60,6 +60,9 @@ public class BinaryTreeTraversalTester {
 
 		System.out.println("\n迭代：");
 		binaryTreeTraversalWhile.postOrder(root);
+		
+		System.out.println("\n迭代：");
+		binaryTreeTraversalWhile.postOrder2(root);
 	}
 
 	@Test

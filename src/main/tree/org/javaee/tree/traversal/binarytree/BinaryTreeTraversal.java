@@ -27,7 +27,9 @@ postOrder(r) = postOrder(r->left)->postOrder(r->right)->print r
 public class BinaryTreeTraversal<T> {
 
 	/**
-	 * 前序遍历（递归模板）
+	 * 前序遍历（递归模板）.
+	 * 时间复杂度：O(N)，其中N为结点的数量，每个节点访问1次.
+	 * 空间复杂度：取决于保存调用栈的深度. 最好：O(logN)，平衡树. 最坏：O(N)，链表.
 	 * 
 	 * @param node
 	 */
@@ -41,7 +43,9 @@ public class BinaryTreeTraversal<T> {
 	}
 	
 	/**
-	 * 中序遍历（递归模板）
+	 * 中序遍历（递归模板）.
+	 * 时间复杂度：O(N)，其中N为结点的数量，每个节点访问1次.
+	 * 空间复杂度：取决于保存调用栈的深度. 最好：O(logN)，平衡树. 最坏：O(N)，链表.
 	 * 
 	 * @param node
 	 */
@@ -55,7 +59,9 @@ public class BinaryTreeTraversal<T> {
 	}
 	
 	/**
-	 * 后序遍历（递归模板）
+	 * 后序遍历（递归模板）.
+	 * 时间复杂度：O(N)，其中N为结点的数量，每个节点访问1次.
+	 * 空间复杂度：取决于保存调用栈的深度. 最好：O(logN)，平衡树. 最坏：O(N)，链表.
 	 * 
 	 * @param node
 	 */
