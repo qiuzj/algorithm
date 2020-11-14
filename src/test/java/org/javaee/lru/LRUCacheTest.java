@@ -46,7 +46,7 @@ public class LRUCacheTest {
      */
 	@Test
     public void testWithArrayList() {
-        LRUCache<Integer, Integer> lruCache = new LRUCacheImpl(2);
+        LRUCache<Integer, Integer> lruCache = new LRUCacheWithList(2);
         lruCache.put(1,1);
         lruCache.put(2,2);
         System.out.println(lruCache.get(1));

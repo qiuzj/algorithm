@@ -9,12 +9,12 @@ import java.util.Map;
  * 非常简陋的LRU实现. 只是说明原理，性能不好。
  *
  */
-public class LRUCacheImpl implements LRUCache<Integer, Integer> {
+public class LRUCacheWithList implements LRUCache<Integer, Integer> {
 	private List<Node> nodeList;
 	private Map<Integer, Integer> keyIndexMap;
 	private int capacity;
 
-	public LRUCacheImpl(int capacity) {
+	public LRUCacheWithList(int capacity) {
 		this.nodeList = new ArrayList<>(capacity);
 		this.keyIndexMap = new HashMap<>();
 		this.capacity = capacity;
