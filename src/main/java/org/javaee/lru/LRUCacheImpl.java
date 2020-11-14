@@ -93,4 +93,9 @@ public class LRUCacheImpl implements LRUCache<Integer, Integer> {
 		// 不写getter、setter了
 	}
 
+	@Override
+	public int size() {
+		return nodeList.size();
+	}
+
 }
