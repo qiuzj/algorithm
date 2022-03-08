@@ -30,7 +30,7 @@
 		<commons-collections.version>3.2.1</commons-collections.version>
 		<joda-time.version>2.10.1</joda-time.version>
 		<commons-io.version>2.6</commons-io.version>
-		<poi.version>4.1.0</poi.version>
+		<poi.version>5.2.1</poi.version>
 		<zookeeper.version>3.4.14</zookeeper.version>
 		<spring.version>4.3.24.RELEASE</spring.version>
 		<netty.version>4.1.38.Final</netty.version>
