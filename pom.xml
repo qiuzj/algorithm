@@ -32,7 +32,7 @@
 		<commons-io.version>2.6</commons-io.version>
 		<poi.version>4.1.0</poi.version>
 		<zookeeper.version>3.4.14</zookeeper.version>
-		<spring.version>4.3.24.RELEASE</spring.version>
+		<spring.version>5.3.18</spring.version>
 		<netty.version>4.1.38.Final</netty.version>
 		<jctools.version>2.1.1</jctools.version>
 		<metrics.version>4.1.0</metrics.version>
