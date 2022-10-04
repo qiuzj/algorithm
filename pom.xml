@@ -36,7 +36,7 @@
 		<netty.version>4.1.38.Final</netty.version>
 		<jctools.version>2.1.1</jctools.version>
 		<metrics.version>4.1.0</metrics.version>
-		<protobuf-java.version>3.10.0</protobuf-java.version>
+		<protobuf-java.version>3.16.3</protobuf-java.version>
 		<protobuf-javanano.version>3.1.0</protobuf-javanano.version>
 		<JavaEWAH.version>1.1.6</JavaEWAH.version>
 	</properties>
